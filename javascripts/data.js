@@ -71,6 +71,8 @@ var thirdDinosaurJSON = function() {
 //     });
 // };
 
+
+// Correct Way to do things when it comes to promises
 var dinoGetter = function() {
     firstDinosaurJSON().then(function(results) {
         results.forEach(function(dino) {
@@ -89,9 +91,15 @@ var dinoGetter = function() {
                     dinosaurs.push(dino);
                 });
             console.log(dinosaurs);
-
+            makeDinos();
             });
         });
+    });
+};
+
+var makeDinos = function() {
+    dinosaurs.forEach(function(dino) {
+        dom(dino);
     });
 };
 
@@ -102,6 +110,7 @@ var initializer = function() {
 var getDinosaurs = function() {
     return dinosaurs;
 };
+
 
 module.exports = {initializer, getDinosaurs};
 

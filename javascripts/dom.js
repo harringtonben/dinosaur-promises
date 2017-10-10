@@ -4,7 +4,7 @@ let outputDiv = $("#dinosaur");
 
 const domString = (dinosaur) => {
     let printString = `<div>
-                        <h1>${dinosaur.name}</h1>
+                        <h1>${dinosaur.type}</h1>
                        </div`;
     printToDom(printString);
 };
