@@ -50,24 +50,48 @@ var thirdDinosaurJSON = function() {
 };
 
 // PROMISE WORKS -- STILL PYRAMID OF DOOM
+// var dinoGetter = function() {
+//     firstDinosaurJSON().then(function(results) {
+//         results.forEach(function(dino) {
+//             dinosaurs.push(dino);
+//         });
+//         secondDinosaurJSON().then(function(results2) {
+//             results2.forEach(function(dino) {
+//                 dinosaurs.push(dino);
+//             });
+//         });
+//             thirdDinosaurJSON().then(function(results3) {
+//                 results3.forEach(function(dino) {
+//                     dinosaurs.push(dino);
+//                 });
+//                 console.log(dinosaurs);
+//             });  
+//     }).catch(function(error) {
+//         console.log("Error from dino1", error);
+//     });
+// };
+
 var dinoGetter = function() {
     firstDinosaurJSON().then(function(results) {
         results.forEach(function(dino) {
             dinosaurs.push(dino);
         });
-        secondDinosaurJSON().then(function(results2) {
-            results2.forEach(function(dino) {
+        return secondDinosaurJSON();
+    }).then(function() {
+        secondDinosaurJSON().then(function(results) {
+            results.forEach(function(dino) {
                 dinosaurs.push(dino);
             });
-        });
-            thirdDinosaurJSON().then(function(results3) {
-                results3.forEach(function(dino) {
+        return thirdDinosaurJSON();
+        }).then(function() {
+            thirdDinosaurJSON().then(function(results) {
+                results.forEach(function(dino) {
                     dinosaurs.push(dino);
                 });
-                console.log(dinosaurs);
-            });  
-    }).catch(function(error) {
-        console.log("Error from dino1", error);
+            console.log(dinosaurs);
+
+            });
+        });
     });
 };
 
