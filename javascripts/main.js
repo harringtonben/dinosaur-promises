@@ -1,3 +1,12 @@
 "use strict";
 
-console.log("I'm in main JS");
+const data = require("./data");
+
+$(document).ready(function() {
+
+    data.initializer();
+
+});
+
+
+
