@@ -73,27 +73,40 @@ var thirdDinosaurJSON = function() {
 
 
 // Correct Way to do things when it comes to promises
+// var dinoGetter = function() {
+//     firstDinosaurJSON().then(function(results) {
+//         results.forEach(function(dino) {
+//             dinosaurs.push(dino);
+//         });
+//         return secondDinosaurJSON();
+//     }).then(function() {
+//         secondDinosaurJSON().then(function(results) {
+//             results.forEach(function(dino) {
+//                 dinosaurs.push(dino);
+//             });
+//         return thirdDinosaurJSON();
+//         }).then(function() {
+//             thirdDinosaurJSON().then(function(results) {
+//                 results.forEach(function(dino) {
+//                     dinosaurs.push(dino);
+//                 });
+//             console.log(dinosaurs);
+//             makeDinos();
+//             });
+//         });
+//     });
+// };
+
 var dinoGetter = function() {
-    firstDinosaurJSON().then(function(results) {
-        results.forEach(function(dino) {
-            dinosaurs.push(dino);
-        });
-        return secondDinosaurJSON();
-    }).then(function() {
-        secondDinosaurJSON().then(function(results) {
-            results.forEach(function(dino) {
+    Promise.all([firstDinosaurJSON(), secondDinosaurJSON(), thirdDinosaurJSON()]).then(function(results){
+        results.forEach(function(result) {
+            result.forEach(function(dino) {
                 dinosaurs.push(dino);
             });
-        return thirdDinosaurJSON();
-        }).then(function() {
-            thirdDinosaurJSON().then(function(results) {
-                results.forEach(function(dino) {
-                    dinosaurs.push(dino);
-                });
-            console.log(dinosaurs);
-            makeDinos();
-            });
         });
+        makeDinos();
+    }).catch(function(error) {
+        console.log("error from Promise.all", error);
     });
 };
 
