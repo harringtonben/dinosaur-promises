@@ -34,13 +34,32 @@ const thirdDinosaurJSON = ()=> {
     });
 };
 
+const catsJSON = ()=> {
+    return new Promise((resolve, reject) => {
+        $.ajax("./data/cats.json").done((data)=> {
+            resolve(data.cats);
+        }).fail((error)=> {
+            reject(error);
+        });
+    });
+};
+
 const dinoGetter = ()=> {
-    Promise.all([firstDinosaurJSON(), secondDinosaurJSON(), thirdDinosaurJSON()]).then(function(results){
+    Promise.all([firstDinosaurJSON(), secondDinosaurJSON(), thirdDinosaurJSON()]).then((results)=> {
         results.forEach((result)=> {
             result.forEach((dino)=> {
                 dinosaurs.push(dino);
             });
         });
+        catsJSON().then((results)=> {
+            console.log(results);
+        });
+
+
+
+
+
+        
         makeDinos();
     }).catch((error)=> {
         console.log("error from Promise.all", error);
