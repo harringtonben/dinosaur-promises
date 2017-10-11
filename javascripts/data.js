@@ -46,25 +46,28 @@ const catsJSON = ()=> {
 
 const dinoGetter = ()=> {
     Promise.all([firstDinosaurJSON(), secondDinosaurJSON(), thirdDinosaurJSON()]).then((results)=> {
+        catsJSON().then((cats)=> {
         results.forEach((result)=> {
             result.forEach((dino)=> {
+                dino.snacks = [];
+                dino.catIds.forEach((catId)=> {
+                    cats.forEach((cat)=> {
+                        if (cat.id === catId) {
+                            dino.snacks.push(cat);
+                        }
+                    });
+                });
                 dinosaurs.push(dino);
             });
         });
-        catsJSON().then((results)=> {
-            console.log(results);
-        });
-
-
-
-
-
-        
         makeDinos();
+        console.log(dinosaurs);
+    });
     }).catch((error)=> {
         console.log("error from Promise.all", error);
     });
 };
+
 
 const makeDinos = ()=> {
     dinosaurs.forEach((dino)=> {
