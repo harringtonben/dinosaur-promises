@@ -34,18 +34,40 @@ const thirdDinosaurJSON = ()=> {
     });
 };
 
+const catsJSON = ()=> {
+    return new Promise((resolve, reject) => {
+        $.ajax("./data/cats.json").done((data)=> {
+            resolve(data.cats);
+        }).fail((error)=> {
+            reject(error);
+        });
+    });
+};
+
 const dinoGetter = ()=> {
-    Promise.all([firstDinosaurJSON(), secondDinosaurJSON(), thirdDinosaurJSON()]).then(function(results){
+    Promise.all([firstDinosaurJSON(), secondDinosaurJSON(), thirdDinosaurJSON()]).then((results)=> {
+        catsJSON().then((cats)=> {
         results.forEach((result)=> {
             result.forEach((dino)=> {
+                dino.snacks = [];
+                dino.catIds.forEach((catId)=> {
+                    cats.forEach((cat)=> {
+                        if (cat.id === catId) {
+                            dino.snacks.push(cat);
+                        }
+                    });
+                });
                 dinosaurs.push(dino);
             });
         });
         makeDinos();
+        console.log(dinosaurs);
+    });
     }).catch((error)=> {
         console.log("error from Promise.all", error);
     });
 };
+
 
 const makeDinos = ()=> {
     dinosaurs.forEach((dino)=> {
