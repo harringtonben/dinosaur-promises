@@ -61,7 +61,6 @@ const dinoGetter = ()=> {
             });
         });
         makeDinos();
-        console.log(dinosaurs);
     });
     }).catch((error)=> {
         console.log("error from Promise.all", error);
